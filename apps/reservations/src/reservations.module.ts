@@ -1,25 +1,40 @@
-import { DatabaseModule, LoggerModule } from '@app/common';
+import { AUTH_SERVICE, DatabaseModule, LoggerModule } from '@app/common';
 import * as Joi from 'joi';
 import { Module } from '@nestjs/common';
 import { ReservationDocument, ReservationSchema } from './models/reservation.schema';
 import { ReservationsController } from './reservations.controller';
 import { ReservationsRepository } from './reservations.repository';
 import { ReservationsService } from './reservations.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+
 
 @Module({
-  imports: [DatabaseModule,
-    DatabaseModule.forFeature([{ name: ReservationDocument.name, schema: ReservationSchema }]),
-    LoggerModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-      validationSchema: Joi.object({
-        MONGODB_URI: Joi.string().required(),
-        PORT: Joi.number().required()
-      }),
-    }),
-  ],
-  controllers: [ReservationsController],
-  providers: [ReservationsService, ReservationsRepository],
+    imports: [DatabaseModule,
+        DatabaseModule.forFeature([{ name: ReservationDocument.name, schema: ReservationSchema }]),
+        LoggerModule,
+        ConfigModule.forRoot({
+            isGlobal: true,
+            validationSchema: Joi.object({
+                MONGODB_URI: Joi.string().required(),
+                PORT: Joi.number().required()
+            }),
+        }),
+        ClientsModule.registerAsync([
+            {
+                name: AUTH_SERVICE,
+                useFactory: (configService: ConfigService) => ({
+                    transpport: Transport.TCP,
+                    options: {
+                        host: configService.get<string>('AUTH_HOST'),
+                        port: configService.get<number>('AUTH_PORT')
+                    }
+                }),
+                inject: [ConfigService]
+            },
+        ]),
+    ],
+    controllers: [ReservationsController],
+    providers: [ReservationsService, ReservationsRepository],
 })
-export class ReservationsModule {}
+export class ReservationsModule { }
