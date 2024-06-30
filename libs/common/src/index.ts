@@ -12,3 +12,5 @@ export * from './decorators/current-user.decorator';
 
 export * from './dto/user.dto';
 export * from './dto/create-charge.dto';
+export * from './dto/notify-email.dto';
+export * from './dto/payments-create-charge.dto';
