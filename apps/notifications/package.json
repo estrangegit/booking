@@ -1,0 +1,15 @@
+{
+    "name": "@booking/notifications",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "nodemailer": "^6.9.14"
+    },
+    "devDependencies": {
+        "@types/nodemailer": "^6.4.15"
+    }
+}
