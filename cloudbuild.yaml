@@ -1,0 +1,51 @@
+steps:
+# auth
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'europe-west9-docker.pkg.dev/booking-429320/auth/production',
+      '-f',
+      'apps/auth/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'europe-west9-docker.pkg.dev/booking-429320/auth/production' ]
+# notifications    
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'europe-west9-docker.pkg.dev/booking-429320/notifications/production',
+      '-f',
+      'apps/notifications/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'europe-west9-docker.pkg.dev/booking-429320/notifications/production' ]
+# payments
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'europe-west9-docker.pkg.dev/booking-429320/payments/production',
+      '-f',
+      'apps/payments/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'europe-west9-docker.pkg.dev/booking-429320/payments/production' ]
+# reservations    
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'europe-west9-docker.pkg.dev/booking-429320/reservations/production',
+      '-f',
+      'apps/reservations/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'europe-west9-docker.pkg.dev/booking-429320/reservations/production' ]
+options:
+  logging: CLOUD_LOGGING_ONLY    
