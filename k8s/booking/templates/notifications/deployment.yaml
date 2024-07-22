@@ -17,3 +17,22 @@ spec:
       containers:
       - image: europe-west9-docker.pkg.dev/booking-429320/notifications/production
         name: notifications
+        env:
+        - name: PORT
+          value: '3000'
+        - name: GOOGLE_OAUTH_CLIENT_ID
+          value: 1042195463762-qomgul7m285k2e4d0o9bglp5adh73vcc.apps.googleusercontent.com
+        - name: SMTP_USER
+          value: etienneestrangin@gmail.com
+        - name: GOOGLE_OAUTH_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: google
+              key: clientSecret
+        - name: GOOGLE_OAUTH_REFRESH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: google
+              key: refreshToken
+        ports:
+        - containerPort: 3000
