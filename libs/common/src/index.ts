@@ -16,3 +16,5 @@ export * from './dto/notify-email.dto';
 export * from './dto/payments-create-charge.dto';
 
 export * from './model/user.schema';
+
+export * from './health/health.module';
