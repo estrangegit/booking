@@ -9,6 +9,7 @@ export * from './auth/jwt-auth.guard';
 export * from './constants/services';
 
 export * from './decorators/current-user.decorator';
+export * from './decorators/roles.decorator';
 
 export * from './dto/user.dto';
 export * from './dto/create-charge.dto';
